@@ -38,4 +38,21 @@ public class Producer {
         sendResultListenableFuture.addCallback(successCallback, failureCallback);
     }
 
+    public void send(String topic, String key, String value) {
+        final ListenableFuture<SendResult<String, String>> sendResultListenableFuture = kafkaTemplate.send(topic, key, value);
+        SuccessCallback<SendResult<String, String>> successCallback = new SuccessCallback<SendResult<String, String>>() {
+            @Override
+            public void onSuccess(SendResult<String, String> stringStringSendResult) {
+                log.error("----------发送成功" + stringStringSendResult.getProducerRecord().topic() + "---" + stringStringSendResult.getProducerRecord().key());
+            }
+        };
+        FailureCallback failureCallback = new FailureCallback() {
+            @Override
+            public void onFailure(Throwable ex) {
+                log.error("发送失败", ex);
+            }
+        };
+        sendResultListenableFuture.addCallback(successCallback, failureCallback);
+    }
+
 }

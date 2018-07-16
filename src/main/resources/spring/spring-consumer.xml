@@ -45,10 +45,10 @@
         <property name="messageListener" ref="kafkaConsumerService"/>
     </bean>
     <!-- 5.消费者并发消息监听容器，执行doStart()方法 -->
-    <bean id="messageListenerContainer" class="org.springframework.kafka.listener.ConcurrentMessageListenerContainer"
+    <bean id="messageListenerContainer" class="org.springframework.kafka.listener.KafkaMessageListenerContainer"
           init-method="doStart">
         <constructor-arg ref="consumerFactory"/>
         <constructor-arg ref="containerProperties"/>
-        <property name="concurrency" value="8"/>
+        <!--<property name="concurrency" value="8"/>-->
     </bean>
 </beans>
